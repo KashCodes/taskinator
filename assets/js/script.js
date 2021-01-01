@@ -14,9 +14,10 @@ var taskFormHandler = function(event) {
 
   formEl.reset();
 
+  /*4.2.8 reset form - paragragh under the gif discusses targeting the elemtents specifically but says it would be cumbersome to do in a large form. The below lines of code are located no where in the 4.2 chapter. However, they are located in the end of lesson 'reflection snapshot code'*/
   // reset form fields for next task to be entered
-  document.querySelector("input[name='task-name']").value = "";
-  document.querySelector("select[name='task-type']").selectedIndex = 0;
+document.querySelector("input[name='task-name']").value = "";
+document.querySelector("select[name='task-type']").selectedIndex = 0;
 
 
   // package up data as an object
