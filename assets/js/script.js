@@ -188,21 +188,6 @@ var deleteTask = function(taskId) {
   taskSelected.remove();
 };
 
-var dragTaskHandler = function(event) {
-  var taskId = event.target.getAttribute("data-task-id");
-  event.dataTransfer.setData("text/plain", taskId);
-  var getId = event.dataTransfer.getData("text/plain");
-  console.log("getId:", getId, typeof getId);
-};
-
-var dropZoneDragHandler = function(event) {
-  var taskListEl = event.target.closest(".task-list");
-  if (taskListEl) {
-    event.preventDefault();
-    taskListEl.setAttribute("style", "background: rgba(68, 233, 255, 0.7); border-style: dashed;");
-  }
-};
-
 var dropTaskHandler = function(event) {
   var id = event.dataTransfer.getData("text/plain");
   var draggableElement = document.querySelector("[data-task-id='" + id + "']");
@@ -229,6 +214,22 @@ var dropTaskHandler = function(event) {
   dropZoneEl.appendChild(draggableElement);
 };
 
+// defines drop zone area
+var dropZoneDragHandler = function(event) {
+  var taskListEl = event.target.closest(".task-list");
+  if (taskListEl) {
+    event.preventDefault();
+    taskListEl.setAttribute("style", "background: rgba(68, 233, 255, 0.7); border-style: dashed;");
+  }
+};
+
+var dragTaskHandler = function(event) {
+  var taskId = event.target.getAttribute("data-task-id");
+  event.dataTransfer.setData("text/plain", taskId);
+  var getId = event.dataTransfer.getData("text/plain");
+  console.log("getId:", getId, typeof getId);
+};
+
 var dragLeaveHandler = function(event) {
   var taskListEl = event.target.closest(".task-list");
   if (taskListEl) {
@@ -236,18 +237,6 @@ var dragLeaveHandler = function(event) {
   }
 }
 
-
-// for dragging tasks
-pageContentEl.addEventListener("dragstart", dragTaskHandler);
-
-// for delgating the drop zone
-pageContentEl.addEventListener("dragover", dropZoneDragHandler);
-
-// for dropping the taks 
-pageContentEl.addEventListener("drop", dropTaskHandler);
-
-// for dropzone highlight to revert back when not hovered
-pageContentEl.addEventListener("dragleave", dragLeaveHandler);
 
 // Create a new task
 formEl.addEventListener("submit", taskFormHandler);
@@ -257,3 +246,12 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 // for changing the status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+// for dragging tasks
+pageContentEl.addEventListener("dragstart", dragTaskHandler);
+// for delgating the drop zone
+pageContentEl.addEventListener("dragover", dropZoneDragHandler);
+// for dropping the taks 
+pageContentEl.addEventListener("drop", dropTaskHandler);
+// for dropzone highlight to revert back when not hovered
+pageContentEl.addEventListener("dragleave", dragLeaveHandler);
