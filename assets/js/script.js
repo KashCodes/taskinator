@@ -36,8 +36,6 @@ var taskFormHandler = function(event) {
     }
     createTaskEl(taskDataObj);
   }
-  //console.log(taskDataObj);
-  //console.log(taskDataObj.status);
 };
 
 var createTaskEl = function(taskDataObj) {
@@ -64,6 +62,7 @@ var createTaskEl = function(taskDataObj) {
 
   taskDataObj.id = taskIdCounter;
   tasks.push(taskDataObj);
+  saveTasks();
 
   // increase task counter for next unique id
   taskIdCounter++;
@@ -127,7 +126,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
       tasks[i].type = taskType;
     }
   };
-
+  saveTasks();
   alert("Task Updated!");
 
   // remove data attribute from form
@@ -177,7 +176,7 @@ var taskStatusChangeHandler = function(event) {
       tasks[i].status = statusValue;
     }
   }
-  console.log(tasks);
+  saveTasks();
 };
 
 var editTask = function(taskId) {
@@ -222,6 +221,7 @@ var deleteTask = function(taskId) {
 
   // reassign tasks array to be the same as updatedTaskArr
   tasks = updatedTaskArr;
+  saveTasks();
 };
 
 var dropTaskHandler = function(event) {
@@ -255,9 +255,7 @@ var dropTaskHandler = function(event) {
       tasks[i].status = statusSelectEl.value.toLowerCase();
     }
   }
-
-  console.log(tasks);
-
+  saveTasks();
 };
 
 // defines drop zone area
@@ -283,6 +281,9 @@ var dragLeaveHandler = function(event) {
   }
 }
 
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 // Create a new task
 formEl.addEventListener("submit", taskFormHandler);
